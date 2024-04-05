@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useMemberLoginMutation, useReissueMutation } from "@ygtang/api";
+import { setAccessToken } from "@ygtang/http";
 
 export function useUserData() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState<string>("");
 
   const { mutate: reissue, isPending: reissuePending } = useReissueMutation({
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       if (data) {
         chrome.storage.local.set({
-          "ygtang-refresh": data.data.refreshToken,
+          "ygtang-refresh": data.refreshToken,
         });
+        setAccessToken(data.accessToken);
         setIsLoggedIn(true);
         setError("");
       }
@@ -26,6 +28,7 @@ export function useUserData() {
       chrome.storage.local.set({
         "ygtang-refresh": data.refreshToken,
       });
+      setAccessToken(data.accessToken);
       setIsLoggedIn(true);
     },
     onError: (data) => {

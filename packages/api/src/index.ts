@@ -19,6 +19,7 @@ export type { SignupSendEmailMutationParams } from "./hooks/auth/useSignupSendEm
 export { useSignupSendEmailMutation } from "./hooks/auth/useSignupSendEmailMutation";
 
 // hooks (inspiration)
+export { useGetInspirations } from "./hooks/inspiration/useGetInspirations";
 export { useInspirationById } from "./hooks/inspiration/useInspirationById";
 
 // hooks (member)

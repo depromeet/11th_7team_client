@@ -17,6 +17,7 @@
     "@tanstack/react-query": "5.18.1",
     "@ygtang/api": "workspace:^",
     "@ygtang/constants": "workspace:*",
+    "@ygtang/hooks": "workspace:*",
     "@ygtang/http": "workspace:^",
     "@ygtang/ui-components": "workspace:*",
     "@ygtang/ui-styles": "workspace:*",

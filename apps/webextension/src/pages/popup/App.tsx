@@ -1,11 +1,13 @@
 import { FormEvent } from "react";
 import { css } from "@emotion/react";
+import { useGetInspirations } from "@ygtang/api";
 import { useInput } from "@ygtang/hooks";
 import { Button, FilledButton, Input, Spacing } from "@ygtang/ui-components";
 import { useTheme, YgtangTheme } from "@ygtang/ui-styles";
 
 import logo from "~/assets/img/logo.svg";
 import NavigationBar from "~/components/NavigationBar";
+import Thumbnails from "~/components/Thumbnails";
 
 import { useUserData } from "./hooks/useUserData";
 
@@ -17,6 +19,7 @@ export function PopupApp() {
 
   const { isLoggedIn, error, login, isLoading, tokenRecheck, isLoginLoading } =
     useUserData();
+  const { data: inspirations } = useGetInspirations({ isLoggedIn });
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
@@ -83,6 +86,7 @@ export function PopupApp() {
             영감탱으로 이동
           </div>
         </FilledButton>
+        {isLoggedIn && <Thumbnails inspirations={inspirations} />}
       </section>
     </>
   );

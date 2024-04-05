@@ -5,7 +5,7 @@ import { usePreventScroll } from "@ygtang/hooks";
 import { motion, Variants } from "framer-motion";
 
 import { dimBackdropCss } from "../shared/styles";
-import PortalWrapper from "./PortalWrapper";
+import { PortalWrapper } from "..";
 
 export interface BottomSheetModalProps {
   isShowing: boolean;

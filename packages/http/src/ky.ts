@@ -16,6 +16,7 @@ let instance = ky.create({
 });
 
 function setAccessToken(token: string) {
+  console.log(token);
   instance = instance.extend({
     hooks: {
       beforeRequest: [
@@ -57,7 +58,10 @@ instance = instance.extend({
 });
 
 async function get<T>(...args: Parameters<typeof instance.get>): Promise<T> {
+  console.log("!!!");
+  console.log(...args);
   const response = await instance.get(...args);
+  console.log(response);
   return response.json();
 }
 

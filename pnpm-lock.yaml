@@ -38,6 +38,9 @@ importers:
       '@ygtang/constants':
         specifier: workspace:*
         version: link:../../packages/constants
+      '@ygtang/hooks':
+        specifier: workspace:*
+        version: link:../../packages/hooks
       '@ygtang/http':
         specifier: workspace:^
         version: link:../../packages/http
