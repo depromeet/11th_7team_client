@@ -8,20 +8,15 @@ interface InspirationListResponseInterface {
   data: { content: InspirationInterface[] };
 }
 
-export function useGetInspirations({ isLoggedIn }: { isLoggedIn: boolean }) {
-  const { data = [], isLoading } = useQuery({
-    queryKey: ["inspirations", isLoggedIn],
+export function useGetInspirations() {
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["inspirations"],
     queryFn: async () => {
-      console.log("??");
-      const { data } = await get<InspirationListResponseInterface>(
-        "/v1/inspiration/list?size=4&page=1&sort=createdDateTime,desc",
+      const query = await get<InspirationListResponseInterface>(
+        "v1/inspiration/list?size=4&page=1&sort=createdDateTime,desc",
       );
-
-      return data.content;
+      return query;
     },
-    placeholderData: [],
-    enabled: isLoggedIn,
   });
-
-  return { data, isLoading };
+  return { data: data?.data.content, isLoading, refetch };
 }
