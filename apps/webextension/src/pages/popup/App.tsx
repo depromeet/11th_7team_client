@@ -1,15 +1,14 @@
 import { FormEvent } from "react";
 import { css } from "@emotion/react";
-import { useGetInspirations } from "@ygtang/api";
 import { useInput } from "@ygtang/hooks";
-import { Button, FilledButton, Input, Spacing } from "@ygtang/ui-components";
+import { FilledButton, Input } from "@ygtang/ui-components";
 import { useTheme, YgtangTheme } from "@ygtang/ui-styles";
 
 import logo from "~/assets/img/logo.svg";
 import NavigationBar from "~/components/NavigationBar";
-import Thumbnails from "~/components/Thumbnails";
 
 import { useUserData } from "./hooks/useUserData";
+import { LoggedIn } from "./LoggedIn";
 
 export function PopupApp() {
   const theme = useTheme();
@@ -17,9 +16,7 @@ export function PopupApp() {
   const emailInput = useInput({});
   const passwordInput = useInput({});
 
-  const { isLoggedIn, error, login, isLoading, tokenRecheck, isLoginLoading } =
-    useUserData();
-  const { data: inspirations } = useGetInspirations({ isLoggedIn });
+  const { isLoggedIn, error, login, isLoading, isLoginLoading } = useUserData();
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
@@ -29,29 +26,16 @@ export function PopupApp() {
     });
   };
 
-  const handleLogout = () => {
-    chrome.storage.local.remove(["ygtang-refresh"]);
-    tokenRecheck();
-    window.close();
-  };
-
   return (
     <>
-      <NavigationBar title="영감탱" />
+      <NavigationBar />
       <section css={linkSectionCss}>
         {isLoading ? (
           <></>
         ) : (
           <>
             {isLoggedIn ? (
-              <>
-                <Spacing top={8} />
-                <div css={loginStateCss}>
-                  <p css={infoTextCss(theme)}>로그인되었습니다.</p>
-                  <Button onClick={handleLogout}>로그아웃</Button>
-                </div>
-                <Spacing bottom={16} />
-              </>
+              <LoggedIn />
             ) : (
               <form onSubmit={handleLogin} css={formCss}>
                 <p css={infoTextCss(theme)}>영감탱 계정으로 로그인해주세요.</p>
@@ -86,7 +70,6 @@ export function PopupApp() {
             영감탱으로 이동
           </div>
         </FilledButton>
-        {isLoggedIn && <Thumbnails inspirations={inspirations} />}
       </section>
     </>
   );
@@ -102,13 +85,6 @@ const linkSectionCss = css`
 const formCss = css`
   display: flex;
   flex-direction: column;
-  gap: 8px;
-`;
-
-const loginStateCss = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 8px;
 `;
 
