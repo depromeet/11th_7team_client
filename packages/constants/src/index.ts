@@ -1,3 +1,4 @@
+export { INSPIRATION_EMPTY_IMAGE_SRC } from "./assets";
 export {
   API_URL_DEVELOPMENT,
   API_URL_PRODUCTION,
@@ -16,3 +17,4 @@ export {
   staggerOne,
 } from "./motions";
 export { sessionStorageRedirectKey } from "./sessionStorage";
+export * from "./types";

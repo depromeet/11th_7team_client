@@ -9,23 +9,30 @@ import { ApiException } from "./exceptions/ApiException";
 import { CustomException } from "./exceptions/CustomException";
 import { errorMessage } from "./exceptions/messagePreset";
 
-let instance = ky.create({
+const instance = ky.create({
   prefixUrl: IS_PRODUCTION ? API_URL_PRODUCTION : API_URL_DEVELOPMENT,
   credentials: "include",
   timeout: 15000,
+  hooks: {
+    beforeRequest: [
+      async (request) => {
+        if (!localStorage) {
+          return;
+        }
+        const token = localStorage.getItem("http_accessToken");
+        token && request.headers.set("accessToken", `${token}`);
+        return request;
+      },
+    ],
+    beforeError: [interceptorError],
+  },
 });
 
 function setAccessToken(token: string) {
-  instance = instance.extend({
-    hooks: {
-      beforeRequest: [
-        async (request) => {
-          request.headers.set("accessToken", `${token}`);
-          return request;
-        },
-      ],
-    },
-  });
+  if (!localStorage) {
+    return;
+  }
+  localStorage.setItem("http_accessToken", token);
 }
 
 function interceptorError(error: HTTPError): never {
@@ -43,18 +50,6 @@ function interceptorError(error: HTTPError): never {
 
   throw error;
 }
-
-instance = instance.extend({
-  hooks: {
-    beforeRequest: [
-      async (request) => {
-        // You can modify the request headers here if needed
-        return request;
-      },
-    ],
-    beforeError: [interceptorError],
-  },
-});
 
 async function get<T>(...args: Parameters<typeof instance.get>): Promise<T> {
   const response = await instance.get(...args);

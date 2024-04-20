@@ -1,0 +1,1 @@
+export { selectRandomColor } from './selectRandomColor';

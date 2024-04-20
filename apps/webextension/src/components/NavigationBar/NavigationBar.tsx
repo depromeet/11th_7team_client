@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { css } from "@emotion/react";
 import { useTheme, YgtangTheme } from "@ygtang/ui-styles";
 
-import logo from "../../assets/img/logo.svg";
+import logoText from "../../assets/img/logo-text.svg";
 
 interface NavigationBarBaseProps {
   title?: string;
@@ -15,11 +15,15 @@ export default function NavigationBar(props: NavigationBarBaseProps) {
 
   return (
     <nav css={navCss(theme)}>
-      {title && (
+      {title ? (
         <h1 css={headingCss(theme)}>
-          <img src={logo} />
+          <img src={logoText} />
           {title}
         </h1>
+      ) : (
+        <div css={centerCss}>
+          <img src={logoText} css={standaloneLogoCss} />
+        </div>
       )}
       {rightElement && <>{rightElement}</>}
     </nav>
@@ -30,7 +34,7 @@ const navCss = (theme: YgtangTheme) => css`
   position: sticky;
   top: 0;
   width: 100%;
-  height: 56px;
+  height: 64px;
   background-color: ${theme.color.background};
 
   display: flex;
@@ -56,4 +60,17 @@ const headingCss = (theme: YgtangTheme) => css`
     height: 24px;
     margin-right: 8px;
   }
+`;
+
+const centerCss = css`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const standaloneLogoCss = css`
+  display: flex;
+  width: 44px;
+  height: 44px;
 `;
