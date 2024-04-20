@@ -28,8 +28,6 @@ export default function Thumbnails({ inspirations }: Props) {
 
 const thumbnailWrapperCss = css`
   width: 100%;
-  padding-top: 16px;
-  padding-bottom: 5px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;

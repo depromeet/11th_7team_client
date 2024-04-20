@@ -13,7 +13,7 @@ export function useGetInspirations() {
     queryKey: ["inspirations"],
     queryFn: async () => {
       const query = await get<InspirationListResponseInterface>(
-        "v1/inspiration/list?size=4&page=1&sort=createdDateTime,desc",
+        "v1/inspiration/list?size=4&page=0&sort=createdDateTime,desc",
       );
       return query;
     },
